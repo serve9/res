@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -159,7 +159,28 @@
             body.printing-generic .print-format-ticket th, body.printing-generic .print-format-ticket td { border-bottom: 1px dashed #000; padding: 4px 2px; text-align: left; }
         }
 
-        @media (max-width: 900px) { #mod-ventas { flex-direction: column; } .pos-right { max-width: 100%; border-left: none; border-top: 2px solid var(--border); } }
+        /* DISEÑO OPTIMIZADO PARA MÓVILES */
+        @media (max-width: 900px) { 
+            #mod-ventas { flex-direction: column; height: 100%; overflow: hidden; } 
+            
+            /* Mitad superior: Productos */
+            .pos-left { flex: 1; height: 50%; padding: 10px; overflow-y: auto; } 
+            .category-trigger-grid { grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 10px; }
+            .img-card-container { height: 70px; }
+            .img-card-name { font-size: 11px; }
+            
+            /* Mitad inferior: Carrito fijo */
+            .pos-right { flex: 1; height: 50%; max-width: 100%; border-left: none; border-top: 2px solid var(--border); display: flex; flex-direction: column; overflow: hidden; } 
+            .cart-body-items { flex: 1; overflow-y: auto; padding: 10px; }
+            
+            /* Reducción de textos y márgenes */
+            .cart-title-zone, .cart-summary-zone { padding: 10px; }
+            .summary-metric.total { font-size: 20px; }
+            .btn-main { padding: 10px; font-size: 14px; }
+            header { padding: 8px 12px; }
+            .brand-logo-badge { width: 36px; height: 36px; font-size: 18px; }
+            .brand-text h1 { font-size: 15px; }
+        }
     </style>
 </head>
 <body>
@@ -760,16 +781,21 @@
                 cont.appendChild(card);
             });
         }
+        
         function renderProductosVentas(catId, catNombre) {
             const cont = document.getElementById('ventas-dinamico-grid'); cont.innerHTML = ''; 
-            document.getElementById('ventas-back-btn').style.display = 'inline-flex'; document.getElementById('ventas-panel-titulo').innerText = catNombre;
+            document.getElementById('ventas-back-btn').style.display = 'inline-flex'; 
+            document.getElementById('ventas-panel-titulo').innerText = catNombre;
+            
             productosData.filter(p => p.catId === catId).forEach(prod => {
                 const card = document.createElement('div'); card.className = 'img-card-btn'; 
                 
+                // LÓGICA SECUENCIAL: Solo suma si el ÚLTIMO producto de la lista es idéntico
                 card.onclick = () => { 
-                    const itemExistente = carrito.find(item => item.id === prod.id);
-                    if(itemExistente) {
-                        itemExistente.cantidad += 1;
+                    const ultimoItem = carrito[carrito.length - 1];
+                    
+                    if(ultimoItem && ultimoItem.id === prod.id) {
+                        ultimoItem.cantidad += 1;
                     } else {
                         carrito.push({...prod, cantidad: 1}); 
                     }
@@ -781,6 +807,7 @@
                 cont.appendChild(card);
             });
         }
+
         function renderCarrito() {
             const cont = document.getElementById('cart-items-wrapper'); cont.innerHTML = ''; let total = 0;
             carrito.forEach((item, index) => { 
@@ -1083,3 +1110,4 @@
     </script>
 </body>
 </html>
+
