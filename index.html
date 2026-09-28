@@ -9,7 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
-    <!-- Librer铆as para Exportar PDF y Excel -->
+    <!-- Librerías para Exportar PDF y Excel -->
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
@@ -57,7 +57,7 @@
         .brand-text span { font-size: 12px; color: var(--text-muted); font-weight: 600; }
         .status-badge { background: #e8f5e9; color: var(--success); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
 
-        /* --- NAVEGACI脫N MODULAR --- */
+        /* --- NAVEGACIÓN MODULAR --- */
         nav.modules-bar { background: #37474f; display: flex; overflow-x: auto; padding: 6px 14px; gap: 8px; flex-shrink: 0; }
         .mod-tab { background: rgba(255,255,255,0.08); color: #cfd8dc; border: none; border-radius: var(--radius-sm); padding: 12px 20px; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
         .mod-tab.active { background: var(--primary); color: #fff; box-shadow: 0 4px 10px rgba(230,81,0,0.4); }
@@ -67,7 +67,7 @@
         .module-view { display: none; width: 100%; height: 100%; overflow-y: auto; }
         .module-view.active { display: flex; }
 
-        /* --- M脫DULO 1: VENTAS --- */
+        /* --- MÓDULO 1: VENTAS --- */
         #mod-ventas { flex-direction: row; overflow: hidden; }
         .pos-left { flex: 1.8; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background: var(--bg-body); }
         .pos-right { flex: 1.2; max-width: 460px; background: var(--surface); border-left: 2px solid var(--border); display: flex; flex-direction: column; box-shadow: -4px 0 15px rgba(0,0,0,0.04); z-index: 10;}
@@ -94,6 +94,9 @@
         .cart-summary-zone { padding: 18px 20px; background: #fafafa; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
         .summary-metric { display: flex; justify-content: space-between; font-size: 16px; font-weight: 600; }
         .summary-metric.total { font-size: 26px; font-weight: 900; color: var(--primary); }
+
+        /* Botón flotante para ver carrito en celulares */
+        #mobile-cart-float-btn { display: none; position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: #fff; padding: 14px 22px; border-radius: 30px; font-weight: bold; font-size: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 999; align-items: center; gap: 10px; cursor: pointer; border: 2px solid #fff; }
 
         /* General Tables, Filters, Tabs */
         .module-toolbar { display: flex; justify-content: space-between; align-items: center; background: var(--surface); padding: 16px 24px; border-radius: var(--radius-md); box-shadow: var(--shadow-subtle); flex-wrap: wrap; gap: 12px; }
@@ -129,10 +132,10 @@
         .modal-scroll { padding: 24px; overflow-y: auto; flex: 1; }
         .modal-footer { padding: 16px 24px; background: #fafafa; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 12px; }
 
-        /* --- SISTEMA DE IMPRESI脫N --- */
+        /* --- SISTEMA DE IMPRESIÓN --- */
         #ticket-print-target, #generic-print-target { display: none; }
         
-        /* IMPRESI脫N POS TICKETS REGULARES (Ventas) */
+        /* IMPRESIÓN POS TICKETS REGULARES (Ventas) */
         @media print {
             body:not(.printing-generic) * { visibility: hidden !important; }
             body:not(.printing-generic) #ticket-print-target, 
@@ -141,7 +144,7 @@
             .prt-center { text-align: center; } .prt-hr { border-bottom: 1px dashed #000; margin: 6px 0; } .prt-row { display: flex; justify-content: space-between; margin: 2px 0; }
         }
 
-        /* IMPRESI脫N GEN脡RICA (Reportes, Clientes - Ticket o Carta) */
+        /* IMPRESIÓN GENÉRICA (Reportes, Clientes - Ticket o Carta) */
         @media print {
             body.printing-generic * { visibility: hidden !important; }
             body.printing-generic #generic-print-target, 
@@ -159,27 +162,18 @@
             body.printing-generic .print-format-ticket th, body.printing-generic .print-format-ticket td { border-bottom: 1px dashed #000; padding: 4px 2px; text-align: left; }
         }
 
-        /* DISE脩O OPTIMIZADO PARA M脫VILES */
+        /* DISEÑO MÓVIL TOTALMENTE FLUIDO E INTERACTIVO */
         @media (max-width: 900px) { 
-            #mod-ventas { flex-direction: column; height: 100%; overflow: hidden; } 
+            body { overflow: auto; height: auto; }
+            #mod-ventas { flex-direction: column; height: auto; overflow: visible; padding-bottom: 80px; } 
+            .pos-left { width: 100%; height: auto; overflow-y: visible; padding: 12px; }
+            .category-trigger-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+            .img-card-container { height: 90px; }
             
-            /* Mitad superior: Productos */
-            .pos-left { flex: 1; height: 50%; padding: 10px; overflow-y: auto; } 
-            .category-trigger-grid { grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 10px; }
-            .img-card-container { height: 70px; }
-            .img-card-name { font-size: 11px; }
-            
-            /* Mitad inferior: Carrito fijo */
-            .pos-right { flex: 1; height: 50%; max-width: 100%; border-left: none; border-top: 2px solid var(--border); display: flex; flex-direction: column; overflow: hidden; } 
-            .cart-body-items { flex: 1; overflow-y: auto; padding: 10px; }
-            
-            /* Reducci贸n de textos y m谩rgenes */
-            .cart-title-zone, .cart-summary-zone { padding: 10px; }
-            .summary-metric.total { font-size: 20px; }
-            .btn-main { padding: 10px; font-size: 14px; }
-            header { padding: 8px 12px; }
-            .brand-logo-badge { width: 36px; height: 36px; font-size: 18px; }
-            .brand-text h1 { font-size: 15px; }
+            /* Carrito deslizable en modal/pantalla completa móvil */
+            .pos-right { position: fixed; inset: 0; max-width: 100%; width: 100%; height: 100%; z-index: 9999; display: none; background: #fff; }
+            .pos-right.mobile-open { display: flex; }
+            #mobile-cart-float-btn { display: flex; }
         }
     </style>
 </head>
@@ -187,10 +181,10 @@
     <!-- LOGIN -->
     <div id="login-screen">
         <div class="login-card">
-            <div class="brand-logo-badge" style="width: 80px; height: 80px; margin: 0 auto 15px auto; font-size: 40px;">馃嵔锔�</div>
+            <div class="brand-logo-badge" style="width: 80px; height: 80px; margin: 0 auto 15px auto; font-size: 40px;">🍽️</div>
             <h2>Acceso POS</h2>
             <div class="input-group"> <label>Usuario</label> <input type="text" id="log-user" class="form-control" value="admin"> </div>
-            <div class="input-group"> <label>Contrase帽a</label> <input type="password" id="log-pass" class="form-control" value="1234"> </div>
+            <div class="input-group"> <label>Contraseña</label> <input type="password" id="log-pass" class="form-control" value="1234"> </div>
             <button class="btn-main btn-primary" style="width: 100%; margin-top: 10px;" onclick="iniciarSesion()">ENTRAR AL SISTEMA</button>
         </div>
     </div>
@@ -198,11 +192,11 @@
     <!-- HEADER -->
     <header>
         <div class="brand-zone">
-            <div class="brand-logo-badge">馃嵔锔�</div>
+            <div class="brand-logo-badge">🍽️</div>
             <div class="brand-text"> <h1>Restaurante POS</h1> <span>Sistema Integral de Caja</span> </div>
         </div>
         <div style="display: flex; align-items: center; gap: 16px;">
-            <div class="status-badge" id="cloud-indicator">En L铆nea</div>
+            <div class="status-badge" id="cloud-indicator">En Línea</div>
             <span style="font-weight: 700; color: var(--secondary);" id="active-user-tag">Admin</span>
             <button class="btn-main btn-outline" style="padding: 8px 12px;" onclick="cerrarSesion()">Salir</button>
         </div>
@@ -212,7 +206,7 @@
     <nav class="modules-bar">
         <button class="mod-tab active" onclick="cambiarModulo('ventas', this)">1. VENTAS</button>
         <button class="mod-tab" onclick="cambiarModulo('productos', this)">2. PRODUCTOS</button>
-        <button class="mod-tab" onclick="cambiarModulo('clientes', this)">3. CLIENTES/CR脡DITOS</button>
+        <button class="mod-tab" onclick="cambiarModulo('clientes', this)">3. CLIENTES/CRÉDITOS</button>
         <button class="mod-tab" onclick="cambiarModulo('reportes', this)">4. REPORTES</button>
         <button class="mod-tab" onclick="cambiarModulo('config', this)">5. CAJA Y AJUSTES</button>
         <button class="mod-tab" onclick="cambiarModulo('usuarios', this)">6. USUARIOS Y EMPRESA</button>
@@ -221,24 +215,27 @@
     <!-- CONTENT -->
     <div id="content-area">
 
-        <!-- M脫DULO 1: VENTAS -->
+        <!-- MÓDULO 1: VENTAS -->
         <div id="mod-ventas" class="module-view active">
-            <!-- Izquierda: Categor铆as / Productos Inline -->
+            <!-- Izquierda: Categorías / Productos Inline -->
             <div class="pos-left">
                 <div class="action-banner">
                     <div style="display: flex; align-items: center; gap: 15px;"> 
                         <button id="ventas-back-btn" class="btn-main btn-outline btn-small" style="display:none;" onclick="renderCategoriasVentas()"> Volver</button>
-                        <h2 id="ventas-panel-titulo" style="font-size: 20px; font-weight: 800; color: var(--secondary);">Seleccione una Categor铆a</h2> 
+                        <h2 id="ventas-panel-titulo" style="font-size: 20px; font-weight: 800; color: var(--secondary);">Seleccione una Categoría</h2> 
                     </div>
                 </div>
                 <div class="category-trigger-grid" id="ventas-dinamico-grid"></div>
             </div>
 
             <!-- Derecha: Carrito -->
-            <div class="pos-right">
+            <div class="pos-right" id="pos-right-cart-panel">
                 <div class="cart-title-zone">
                     <div> <div style="font-weight: 900; font-size: 18px;">PEDIDO ACTUAL</div> <div style="font-size: 12px; color: #b0bec5;" id="pedido-correlativo-tag">Pedido #0000</div> </div>
-                    <button class="btn-main btn-danger" style="padding: 6px 10px; font-size: 12px;" onclick="vaciarCarrito()">Limpiar</button>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn-main btn-outline btn-small" style="color:#fff; border-color:#fff; display:none;" id="close-mobile-cart-btn" onclick="toggleMobileCart(false)">Cerrar ✕</button>
+                        <button class="btn-main btn-danger" style="padding: 6px 10px; font-size: 12px;" onclick="vaciarCarrito()">Limpiar</button>
+                    </div>
                 </div>
                 <div style="padding: 10px 15px; background: #eceff1; display: flex; gap: 8px; flex-direction: column;">
                     <div style="display: flex; gap: 8px;">
@@ -258,28 +255,33 @@
                     <button class="btn-main btn-success" style="font-size: 20px; padding: 18px;" onclick="abrirModalCobro()">COBRAR</button>
                 </div>
             </div>
+
+            <!-- Botón flotante inferior para ver pedido en móviles -->
+            <div id="mobile-cart-float-btn" onclick="toggleMobileCart(true)">
+                🛒 Ver Pedido (<span id="mobile-cart-count">0</span>) - <span id="mobile-cart-total">Bs. 0.00</span>
+            </div>
         </div>
 
-        <!-- M脫DULO 2: INGRESO DE PRODUCTOS -->
+        <!-- MÓDULO 2: INGRESO DE PRODUCTOS -->
         <div id="mod-productos" class="module-view" style="flex-direction: column; padding: 24px; gap: 20px;">
             <div class="module-toolbar">
-                <div> <h2 style="font-size: 22px; font-weight: 800; color: var(--secondary);">Cat谩logo de Productos</h2> </div>
+                <div> <h2 style="font-size: 22px; font-weight: 800; color: var(--secondary);">Catálogo de Productos</h2> </div>
                 <div style="display:flex; gap:10px;">
-                    <button class="btn-main btn-secondary" onclick="abrirModalCategoriaForm()">+ Nueva Categor铆a</button>
+                    <button class="btn-main btn-secondary" onclick="abrirModalCategoriaForm()">+ Nueva Categoría</button>
                     <button class="btn-main btn-primary" onclick="abrirModalProductoForm()">+ Nuevo Producto</button>
                 </div>
             </div>
-            <h3 style="font-size:16px; color:var(--text-muted);">Categor铆as Disponibles</h3>
+            <h3 style="font-size:16px; color:var(--text-muted);">Categorías Disponibles</h3>
             <div class="category-trigger-grid" id="productos-cat-cards"></div>
             <hr style="border:none; border-top:1px solid var(--border); margin: 10px 0;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h3 id="titulo-productos-admin" style="font-size:18px; color:var(--secondary);">Seleccione una categor铆a para ver productos</h3>
+                <h3 id="titulo-productos-admin" style="font-size:18px; color:var(--secondary);">Seleccione una categoría para ver productos</h3>
                 <button class="btn-main btn-outline btn-small" onclick="renderAdminProductos()">Ver Todos</button>
             </div>
             <div class="category-trigger-grid" id="productos-items-cards"></div>
         </div>
 
-        <!-- M脫DULO 3: CLIENTES Y CTAS COBRAR -->
+        <!-- MÓDULO 3: CLIENTES Y CTAS COBRAR -->
         <div id="mod-clientes" class="module-view" style="flex-direction: column; padding: 24px; gap: 20px;">
             <div class="module-toolbar">
                 <div> <h2 style="font-size: 22px; font-weight: 800; color: var(--secondary);">Directorio & Cuentas por Cobrar</h2> </div>
@@ -295,7 +297,7 @@
             <div id="cli-view-lista">
                 <div class="data-table-wrapper">
                     <table class="pos-table" id="tabla-clientes">
-                        <thead> <tr> <th>Nombre</th> <th>Tel茅fono</th> <th>Total Compras</th> <th>Total Pagado</th> <th>Saldo</th> <th>Acciones y Reportes</th> </tr> </thead>
+                        <thead> <tr> <th>Nombre</th> <th>Teléfono</th> <th>Total Compras</th> <th>Total Pagado</th> <th>Saldo</th> <th>Acciones y Reportes</th> </tr> </thead>
                         <tbody id="tabla-clientes-body"></tbody>
                     </table>
                 </div>
@@ -304,20 +306,20 @@
             <div id="cli-view-cuentas" style="display:none;">
                 <div class="data-table-wrapper">
                     <table class="pos-table" id="tabla-cuentas">
-                        <thead> <tr> <th>Cliente</th> <th>Tel茅fono</th> <th>Total Cr茅dito</th> <th>Total Abonado</th> <th>Saldo Pendiente</th> <th>Acciones y Reportes</th> </tr> </thead>
+                        <thead> <tr> <th>Cliente</th> <th>Teléfono</th> <th>Total Crédito</th> <th>Total Abonado</th> <th>Saldo Pendiente</th> <th>Acciones y Reportes</th> </tr> </thead>
                         <tbody id="tabla-cuentas-body"></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- M脫DULO 4: REPORTES AVANZADOS -->
+        <!-- MÓDULO 4: REPORTES AVANZADOS -->
         <div id="mod-reportes" class="module-view" style="flex-direction: column; padding: 24px; gap: 15px;">
             <div class="kpi-row">
                 <div class="kpi-box" style="border-left-color: #2e7d32;"> <h4>Ventas Periodo</h4> <div class="kpi-num" id="kpi-ventas">Bs. 0.00</div> </div>
                 <div class="kpi-box" style="border-left-color: #0288d1;"> <h4>Efectivo Real</h4> <div class="kpi-num" id="kpi-efectivo">Bs. 0.00</div> </div>
                 <div class="kpi-box" style="border-left-color: #7b1fa2;"> <h4>Digital (Tarj/QR)</h4> <div class="kpi-num" id="kpi-digital">Bs. 0.00</div> </div>
-                <div class="kpi-box" style="border-left-color: #f57f17;"> <h4>A Cr茅dito</h4> <div class="kpi-num" id="kpi-credito">Bs. 0.00</div> </div>
+                <div class="kpi-box" style="border-left-color: #f57f17;"> <h4>A Crédito</h4> <div class="kpi-num" id="kpi-credito">Bs. 0.00</div> </div>
                 <div class="kpi-box" style="border-left-color: #00838f;"> <h4>Ganancia Est.</h4> <div class="kpi-num" id="kpi-ganancia">Bs. 0.00</div> </div>
             </div>
 
@@ -328,8 +330,8 @@
                 <div class="filter-group"> <label>Seleccionar Cliente:</label> 
                     <select id="rep-f-cliente-select"> <option value="TODOS">-- Todos los Clientes --</option> </select>
                 </div>
-                <div class="filter-group"> <label>M茅todo Pago:</label> 
-                    <select id="rep-f-pago"> <option value="TODOS">Todos</option> <option value="EFECTIVO">Efectivo</option> <option value="TARJETA">Tarjeta</option> <option value="QR">QR</option> <option value="CR脡DITO">Cr茅dito</option> </select>
+                <div class="filter-group"> <label>Método Pago:</label> 
+                    <select id="rep-f-pago"> <option value="TODOS">Todos</option> <option value="EFECTIVO">Efectivo</option> <option value="TARJETA">Tarjeta</option> <option value="QR">QR</option> <option value="CRÉDITO">Crédito</option> </select>
                 </div>
                 <div class="filter-group" style="display:flex; align-items:flex-end; gap:8px;">
                     <button class="btn-main btn-primary" style="flex:1;" onclick="ejecutarReportes()">BUSCAR</button>
@@ -340,16 +342,16 @@
             <div class="sub-tabs-bar">
                 <button class="sub-tab active" onclick="cambiarSubTabReporte('general', this)">Todas las Ventas</button>
                 <button class="sub-tab" onclick="cambiarSubTabReporte('contado', this)">Ventas Contado</button>
-                <button class="sub-tab" onclick="cambiarSubTabReporte('credito', this)">Ventas a Cr茅dito</button>
+                <button class="sub-tab" onclick="cambiarSubTabReporte('credito', this)">Ventas a Crédito</button>
             </div>
 
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                 <div style="font-size:14px; font-weight:700; color:var(--text-muted);" id="rep-paginacion-info">Mostrando Ventas.</div>
                 <div class="btn-group-actions">
-                    <button class="btn-main btn-outline btn-small" onclick="exportarImprimirGenerico('tabla-reporte-dinamica', 'ticket', 'Reporte de Ventas')">馃枿锔� Ticket</button>
-                    <button class="btn-main btn-outline btn-small" onclick="exportarImprimirGenerico('tabla-reporte-dinamica', 'carta', 'Reporte de Ventas')">馃搫 Carta</button>
-                    <button class="btn-main btn-outline btn-small" onclick="exportarImprimirGenerico('tabla-reporte-dinamica', 'pdf', 'Reporte_Ventas')">馃摃 PDF</button>
-                    <button class="btn-main btn-outline btn-small" onclick="exportarImprimirGenerico('tabla-reporte-dinamica', 'excel', 'Reporte_Ventas')">馃搳 Excel</button>
+                    <button class="btn-main btn-outline btn-small" onclick="exportarImprimirGenerico('tabla-reporte-dinamica', 'ticket', 'Reporte de Ventas')">🖨️ Ticket</button>
+                    <button class="btn-main btn-outline btn-small" onclick="exportarImprimirGenerico('tabla-reporte-dinamica', 'carta', 'Reporte de Ventas')">📄 Carta</button>
+                    <button class="btn-main btn-outline btn-small" onclick="exportarImprimirGenerico('tabla-reporte-dinamica', 'pdf', 'Reporte_Ventas')">📕 PDF</button>
+                    <button class="btn-main btn-outline btn-small" onclick="exportarImprimirGenerico('tabla-reporte-dinamica', 'excel', 'Reporte_Ventas')">📊 Excel</button>
                 </div>
             </div>
 
@@ -358,7 +360,7 @@
             </div>
         </div>
 
-        <!-- M脫DULO 5: CAJA Y CONFIGURACI脫N -->
+        <!-- MÓDULO 5: CAJA Y CONFIGURACIÓN -->
         <div id="mod-config" class="module-view" style="flex-direction: column; padding: 24px; gap: 20px; max-width: 1000px; margin: 0 auto;">
             <div class="config-card" style="background:var(--surface); padding:24px; border-radius:var(--radius-md); box-shadow:var(--shadow-subtle);">
                 <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 15px;">Cierre de Caja por Turno</h3>
@@ -391,11 +393,11 @@
             </div>
         </div>
 
-        <!-- M脫DULO 6: USUARIOS Y EMPRESA -->
+        <!-- MÓDULO 6: USUARIOS Y EMPRESA -->
         <div id="mod-usuarios" class="module-view" style="flex-direction: column; padding: 24px; gap: 20px;">
             
             <div class="config-card" style="background:var(--surface); padding:24px; border-radius:var(--radius-md); box-shadow:var(--shadow-subtle);">
-                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 15px;">Configuraci贸n de la Empresa</h3>
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 15px;">Configuración de la Empresa</h3>
                 <div class="filters-grid" style="margin-bottom: 0;">
                     <div class="input-group">
                         <label>Nombre de la Empresa</label>
@@ -412,13 +414,13 @@
             </div>
 
             <div class="module-toolbar">
-                <div> <h2 style="font-size: 22px; font-weight: 800; color: var(--secondary);">Gesti贸n de Usuarios</h2> </div>
+                <div> <h2 style="font-size: 22px; font-weight: 800; color: var(--secondary);">Gestión de Usuarios</h2> </div>
                 <button class="btn-main btn-primary" onclick="abrirModalUsuarioNuevo()">+ Nuevo Usuario</button>
             </div>
             
             <div class="data-table-wrapper">
                 <table class="pos-table" id="tabla-usuarios">
-                    <thead> <tr> <th>Usuario</th> <th>Contrase帽a</th> <th>Rol del Sistema</th> <th>Acciones</th> </tr> </thead>
+                    <thead> <tr> <th>Usuario</th> <th>Contraseña</th> <th>Rol del Sistema</th> <th>Acciones</th> </tr> </thead>
                     <tbody id="tabla-usuarios-body"></tbody>
                 </table>
             </div>
@@ -435,7 +437,7 @@
             <div class="modal-scroll">
                 <input type="hidden" id="user-id">
                 <div class="input-group"> <label>Nombre de Usuario</label> <input type="text" id="user-nombre" class="form-control"> </div>
-                <div class="input-group"> <label>Contrase帽a</label> <input type="text" id="user-pass" class="form-control"> </div>
+                <div class="input-group"> <label>Contraseña</label> <input type="text" id="user-pass" class="form-control"> </div>
                 <div class="input-group"> <label>Rol</label> 
                     <select id="user-rol" class="form-control"> <option value="ADMIN">Administrador</option> <option value="CAJERO">Cajero</option> </select> 
                 </div>
@@ -451,23 +453,23 @@
             <div class="modal-scroll">
                 <input type="hidden" id="cli-id">
                 <div class="input-group"><label>Nombre</label><input type="text" id="cli-nombre" class="form-control"></div>
-                <div class="input-group"><label>Tel茅fono</label><input type="text" id="cli-telefono" class="form-control"></div>
-                <div class="input-group"><label>Direcci贸n</label><input type="text" id="cli-direccion" class="form-control"></div>
+                <div class="input-group"><label>Teléfono</label><input type="text" id="cli-telefono" class="form-control"></div>
+                <div class="input-group"><label>Dirección</label><input type="text" id="cli-direccion" class="form-control"></div>
             </div>
             <div class="modal-footer"><button class="btn-main btn-success" style="width:100%" onclick="guardarCliente()">Guardar Cliente</button></div>
         </div>
     </div>
 
-    <!-- Modales de Categor铆a / Producto -->
+    <!-- Modales de Categoría / Producto -->
     <div class="modal-veil" id="modal-cat-form">
         <div class="modal-box" style="max-width: 400px;">
-            <div class="modal-top"><span id="cat-form-title">Nueva Categor铆a</span><button class="btn-main btn-outline btn-small" onclick="cerrarModal('modal-cat-form')">X</button></div>
+            <div class="modal-top"><span id="cat-form-title">Nueva Categoría</span><button class="btn-main btn-outline btn-small" onclick="cerrarModal('modal-cat-form')">X</button></div>
             <div class="modal-scroll">
                 <input type="hidden" id="cat-id-input">
-                <div class="input-group"><label>Nombre de la Categor铆a</label><input type="text" id="cat-nombre-input" class="form-control"></div>
+                <div class="input-group"><label>Nombre de la Categoría</label><input type="text" id="cat-nombre-input" class="form-control"></div>
                 <div class="input-group"><label>URL de Imagen (Opcional)</label><input type="text" id="cat-img-input" class="form-control" placeholder="https://ejemplo.com/imagen.jpg"></div>
             </div>
-            <div class="modal-footer"><button class="btn-main btn-success" style="width:100%" onclick="guardarCategoria()">Guardar Categor铆a</button></div>
+            <div class="modal-footer"><button class="btn-main btn-success" style="width:100%" onclick="guardarCategoria()">Guardar Categoría</button></div>
         </div>
     </div>
 
@@ -477,9 +479,9 @@
             <div class="modal-scroll">
                 <input type="hidden" id="prod-id-input">
                 <div class="input-group"><label>Nombre del Producto</label><input type="text" id="prod-nombre-input" class="form-control"></div>
-                <div class="input-group"><label>Categor铆a</label><select id="prod-cat-select" class="form-control"></select></div>
+                <div class="input-group"><label>Categoría</label><select id="prod-cat-select" class="form-control"></select></div>
                 <div class="input-group"><label>Precio de Venta (Bs.)</label><input type="number" id="prod-precio-input" class="form-control"></div>
-                <div class="input-group"><label>Costo de Fabricaci贸n (Bs.) (Para c谩lculo de ganancia)</label><input type="number" id="prod-costo-input" class="form-control"></div>
+                <div class="input-group"><label>Costo de Fabricación (Bs.) (Para cálculo de ganancia)</label><input type="number" id="prod-costo-input" class="form-control"></div>
                 <div class="input-group"><label>URL de Imagen (Opcional)</label><input type="text" id="prod-img-input" class="form-control" placeholder="https://ejemplo.com/hamburguesa.jpg"></div>
             </div>
             <div class="modal-footer"><button class="btn-main btn-success" style="width:100%" onclick="guardarProducto()">Guardar Producto</button></div>
@@ -493,21 +495,21 @@
             <div class="modal-scroll">
                 <div style="text-align: center; margin-bottom: 20px;"> <div style="font-size: 14px;">TOTAL A COBRAR</div> <div style="font-size: 38px; font-weight: 900; color: var(--primary);" id="modal-cobro-monto">Bs. 0.00</div> </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-                    <button class="btn-main btn-outline pay-choice active btn-primary" onclick="seleccionarMetodoCobro('EFECTIVO', this)">馃挼 EFECTIVO</button>
-                    <button class="btn-main btn-outline pay-choice" onclick="seleccionarMetodoCobro('TARJETA', this)">馃挸 TARJETA</button>
-                    <button class="btn-main btn-outline pay-choice" onclick="seleccionarMetodoCobro('QR', this)">馃摫 QR</button>
-                    <button class="btn-main btn-outline pay-choice" onclick="seleccionarMetodoCobro('CR脡DITO', this)">馃摑 CR脡DITO</button>
+                    <button class="btn-main btn-outline pay-choice active btn-primary" onclick="seleccionarMetodoCobro('EFECTIVO', this)">💵 EFECTIVO</button>
+                    <button class="btn-main btn-outline pay-choice" onclick="seleccionarMetodoCobro('TARJETA', this)">💳 TARJETA</button>
+                    <button class="btn-main btn-outline pay-choice" onclick="seleccionarMetodoCobro('QR', this)">📱 QR</button>
+                    <button class="btn-main btn-outline pay-choice" onclick="seleccionarMetodoCobro('CRÉDITO', this)">📝 CRÉDITO</button>
                 </div>
                 <div id="cash-change-calculator">
                     <div class="input-group"> <label>Monto Recibido (Bs.)</label> <input type="number" id="cobro-recibido" class="form-control" style="font-size: 20px;" oninput="calcularVuelto()"> </div>
                     <div style="font-size: 18px; font-weight: 800;"> Cambio: <span id="cobro-cambio" style="color: var(--danger);">Bs. 0.00</span> </div>
                 </div>
             </div>
-            <div class="modal-footer"> <button class="btn-main btn-success" style="font-size: 18px; width:100%;" onclick="finalizarVentaEImprimir()">鉁� CONFIRMAR E IMPRIMIR</button> </div>
+            <div class="modal-footer"> <button class="btn-main btn-success" style="font-size: 18px; width:100%;" onclick="finalizarVentaEImprimir()">✅ CONFIRMAR E IMPRIMIR</button> </div>
         </div>
     </div>
 
-    <!-- TICKET T脡RMICO (Ventas) -->
+    <!-- TICKET TÉRMICO (Ventas) -->
     <div id="ticket-print-target">
         <div class="prt-center"> <h2 id="prt-biz-name" style="margin: 0;">RESTAURANTE POS</h2> <p id="prt-biz-nit" style="margin: 2px 0;">NIT: 12345678</p> </div>
         <div class="prt-hr"></div>
@@ -520,11 +522,11 @@
         <div class="prt-row" style="font-size: 14px; font-weight: 800;"> <span>TOTAL:</span> <span id="prt-total-val">Bs. 0.00</span> </div>
     </div>
 
-    <!-- TARGET PARA IMPRESI脫N GEN脡RICA (Reportes y Clientes) -->
+    <!-- TARGET PARA IMPRESIÓN GENÉRICA (Reportes y Clientes) -->
     <div id="generic-print-target"></div>
 
     <script>
-        // --- 1. CONFIGURACI脫N E INICIALIZACI脫N DE FIREBASE ---
+        // --- 1. CONFIGURACIÓN E INICIALIZACIÓN DE FIREBASE ---
         const firebaseConfig = {
             apiKey: "AIzaSyCVZp1uzNGAwYnXefr_4lEwedqC8cQ_c9g",
             authDomain: "restaurante-pos2026.firebaseapp.com",
@@ -535,7 +537,6 @@
             appId: "1:123784337337:web:87a1cc041b785dc6e08868"
         };
         
-        // Inicializamos Firebase usando el m茅todo 'compat' que importamos en el <head>
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
@@ -543,7 +544,7 @@
         let usuariosData = [{ id: 'u1', user: 'admin', pass: '1234', rol: 'ADMIN' }];
         let configEmpresa = { nombre: 'Restaurante POS', logoUrl: '' }; 
         let categoriasData = [
-            { id: "c1", nombre: "Comida R谩pida", imagenUrl: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=300&q=80" },
+            { id: "c1", nombre: "Comida Rápida", imagenUrl: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=300&q=80" },
             { id: "c2", nombre: "Bebidas", imagenUrl: "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=300&q=80" }
         ];
         let productosData = [
@@ -557,7 +558,7 @@
         let carrito = []; let correlativoPedido = 1; let metodoPagoSeleccionado = 'EFECTIVO';
         let usuarioActual = null; let repSubTab = 'general'; let tabClienteActiva = 'lista';
 
-        /* ================= 2. INICIALIZACI脫N Y AUTH ================= */
+        /* ================= 2. INICIALIZACIÓN Y AUTH ================= */
         function iniciarSesion() {
             const usr = document.getElementById('log-user').value; const pass = document.getElementById('log-pass').value;
             const uEncontrado = usuariosData.find(u => u.user === usr && u.pass === pass);
@@ -570,12 +571,11 @@
         function cerrarSesion() { 
             usuarioActual = null; 
             document.getElementById('login-screen').style.display = 'flex'; 
-            db.ref('pos_data').off(); // Detener la escucha al cerrar sesi贸n
+            db.ref('pos_data').off(); 
         }
         
         function generarUUID() { return 'id-' + Math.random().toString(36).substr(2, 9) + '-' + Date.now(); }
         
-        // --- 2. MODIFICACI脫N: GUARDAR EN FIREBASE ---
         function guardarEstadoEnStorage() {
             db.ref('pos_data').set({
                 usuarios: usuariosData,
@@ -589,7 +589,6 @@
             });
         }
 
-        // --- 3. MODIFICACI脫N: CARGAR DESDE FIREBASE ---
         function cargarEstadoInicial() {
             db.ref('pos_data').on('value', (snapshot) => {
                 if (snapshot.exists()) {
@@ -639,8 +638,19 @@
         function abrirModal(id) { document.getElementById(id).classList.add('open'); }
         function cerrarModal(id) { document.getElementById(id).classList.remove('open'); }
 
+        // Función interactiva para abrir/cerrar carrito en celular
+        function toggleMobileCart(abrir) {
+            const panel = document.getElementById('pos-right-cart-panel');
+            const btnClose = document.getElementById('close-mobile-cart-btn');
+            if(abrir) {
+                panel.classList.add('mobile-open');
+                btnClose.style.display = 'inline-flex';
+            } else {
+                panel.classList.remove('mobile-open');
+            }
+        }
 
-        /* ================= CONFIGURACI脫N DE EMPRESA ================= */
+        /* ================= CONFIGURACIÓN DE EMPRESA ================= */
         function aplicarConfiguracionEmpresa() {
             document.getElementById('empresa-nombre-input').value = configEmpresa.nombre || '';
             document.getElementById('empresa-logo-input').value = configEmpresa.logoUrl || '';
@@ -652,7 +662,7 @@
             if(headerLogoBadge) {
                 if(configEmpresa.logoUrl) {
                     headerLogoBadge.innerHTML = `<img src="${configEmpresa.logoUrl}" style="width:100%; height:100%; object-fit:cover;">`;
-                } else { headerLogoBadge.innerHTML = '馃嵔锔�'; }
+                } else { headerLogoBadge.innerHTML = '🍽️'; }
             }
             const ticketBizName = document.getElementById('prt-biz-name');
             if(ticketBizName) ticketBizName.innerText = configEmpresa.nombre || 'RESTAURANTE POS';
@@ -665,7 +675,7 @@
         }
 
 
-        /* ================= 3. GESTI脫N DE PRODUCTOS Y CATEGOR脥AS ================= */
+        /* ================= 3. GESTIÓN DE PRODUCTOS Y CATEGORÍAS ================= */
         function renderAdminProductos() {
             const contCat = document.getElementById('productos-cat-cards'); contCat.innerHTML = '';
             const prodCatSelect = document.getElementById('prod-cat-select'); prodCatSelect.innerHTML = '';
@@ -678,8 +688,8 @@
                 
                 card.innerHTML = `
                     <div class="admin-actions">
-                        <button class="btn-main btn-primary btn-small" onclick="abrirModalCategoriaForm('${cat.id}')">鉁忥笍</button>
-                        <button class="btn-main btn-danger btn-small" onclick="eliminarCategoria('${cat.id}')">馃棏锔�</button>
+                        <button class="btn-main btn-primary btn-small" onclick="abrirModalCategoriaForm('${cat.id}')">✏️</button>
+                        <button class="btn-main btn-danger btn-small" onclick="eliminarCategoria('${cat.id}')">🗑️</button>
                     </div>
                     <div class="img-card-container" onclick="renderProductosItems('${cat.id}')">${imgHTML}</div>
                     <div class="img-card-content" onclick="renderProductosItems('${cat.id}')"><div class="img-card-name">${cat.nombre}</div></div>
@@ -705,8 +715,8 @@
                 const imgHTML = prod.imagenUrl ? `<img src="${prod.imagenUrl}" alt="Prod">` : '';
                 card.innerHTML = `
                     <div class="admin-actions">
-                        <button class="btn-main btn-primary btn-small" onclick="abrirModalProductoForm('${prod.id}')">鉁忥笍</button>
-                        <button class="btn-main btn-danger btn-small" onclick="eliminarProducto('${prod.id}')">馃棏锔�</button>
+                        <button class="btn-main btn-primary btn-small" onclick="abrirModalProductoForm('${prod.id}')">✏️</button>
+                        <button class="btn-main btn-danger btn-small" onclick="eliminarProducto('${prod.id}')">🗑️</button>
                     </div>
                     <div class="img-card-container">${imgHTML}</div>
                     <div class="img-card-content">
@@ -723,10 +733,10 @@
             if(id) {
                 const cat = categoriasData.find(c => c.id === id);
                 document.getElementById('cat-id-input').value = cat.id; document.getElementById('cat-nombre-input').value = cat.nombre;
-                document.getElementById('cat-img-input').value = cat.imagenUrl || ""; document.getElementById('cat-form-title').innerText = "Editar Categor铆a";
+                document.getElementById('cat-img-input').value = cat.imagenUrl || ""; document.getElementById('cat-form-title').innerText = "Editar Categoría";
             } else {
                 document.getElementById('cat-id-input').value = ""; document.getElementById('cat-nombre-input').value = "";
-                document.getElementById('cat-img-input').value = ""; document.getElementById('cat-form-title').innerText = "Nueva Categor铆a";
+                document.getElementById('cat-img-input').value = ""; document.getElementById('cat-form-title').innerText = "Nueva Categoría";
             }
             abrirModal('modal-cat-form');
         }
@@ -740,12 +750,12 @@
         }
 
         function eliminarCategoria(id) {
-            if(productosData.some(p => p.catId === id)) return alert("Elimina los productos de esta categor铆a primero.");
-            if(confirm("驴Eliminar categor铆a?")) { categoriasData = categoriasData.filter(c => c.id !== id); guardarEstadoEnStorage(); renderAdminProductos(); renderCategoriasVentas(); }
+            if(productosData.some(p => p.catId === id)) return alert("Elimina los productos de esta categoría primero.");
+            if(confirm("¿Eliminar categoría?")) { categoriasData = categoriasData.filter(c => c.id !== id); guardarEstadoEnStorage(); renderAdminProductos(); renderCategoriasVentas(); }
         }
 
         function abrirModalProductoForm(id = null) {
-            if(categoriasData.length === 0) return alert("Crea una categor铆a primero.");
+            if(categoriasData.length === 0) return alert("Crea una categoría primero.");
             if(id) {
                 const p = productosData.find(x => x.id === id);
                 document.getElementById('prod-id-input').value = p.id; document.getElementById('prod-nombre-input').value = p.nombre;
@@ -762,18 +772,18 @@
         function guardarProducto() {
             const id = document.getElementById('prod-id-input').value; const nom = document.getElementById('prod-nombre-input').value; const cat = document.getElementById('prod-cat-select').value;
             const pre = parseFloat(document.getElementById('prod-precio-input').value) || 0; const cos = parseFloat(document.getElementById('prod-costo-input').value) || 0; const img = document.getElementById('prod-img-input').value;
-            if(!nom || pre <= 0) return alert("Nombre y precio v谩lido son obligatorios.");
+            if(!nom || pre <= 0) return alert("Nombre y precio válido son obligatorios.");
             if(id) { const p = productosData.find(x => x.id === id); p.nombre = nom; p.catId = cat; p.precio = pre; p.costo = cos; p.imagenUrl = img; } 
             else { productosData.push({ id: generarUUID(), catId: cat, nombre: nom, precio: pre, costo: cos, imagenUrl: img }); }
             guardarEstadoEnStorage(); cerrarModal('modal-prod-form'); renderAdminProductos();
         }
 
-        function eliminarProducto(id) { if(confirm("驴Eliminar producto?")) { productosData = productosData.filter(p => p.id !== id); guardarEstadoEnStorage(); renderAdminProductos(); } }
+        function eliminarProducto(id) { if(confirm("¿Eliminar producto?")) { productosData = productosData.filter(p => p.id !== id); guardarEstadoEnStorage(); renderAdminProductos(); } }
 
-        /* ================= 4. M脫DULO DE VENTAS Y CARRITO ================= */
+        /* ================= 4. MÓDULO DE VENTAS Y CARRITO ================= */
         function renderCategoriasVentas() {
             const cont = document.getElementById('ventas-dinamico-grid'); cont.innerHTML = ''; 
-            document.getElementById('ventas-back-btn').style.display = 'none'; document.getElementById('ventas-panel-titulo').innerText = 'Categor铆as';
+            document.getElementById('ventas-back-btn').style.display = 'none'; document.getElementById('ventas-panel-titulo').innerText = 'Categorías';
             categoriasData.forEach(cat => {
                 const card = document.createElement('div'); card.className = 'img-card-btn'; card.onclick = () => renderProductosVentas(cat.id, cat.nombre);
                 const imgHTML = cat.imagenUrl ? `<img src="${cat.imagenUrl}" alt="Cat">` : '';
@@ -790,7 +800,7 @@
             productosData.filter(p => p.catId === catId).forEach(prod => {
                 const card = document.createElement('div'); card.className = 'img-card-btn'; 
                 
-                // L脫GICA SECUENCIAL: Solo suma si el 脷LTIMO producto de la lista es id茅ntico
+                // LÓGICA SECUENCIAL: Solo suma si el ÚLTIMO producto de la lista es idéntico
                 card.onclick = () => { 
                     const ultimoItem = carrito[carrito.length - 1];
                     
@@ -809,9 +819,10 @@
         }
 
         function renderCarrito() {
-            const cont = document.getElementById('cart-items-wrapper'); cont.innerHTML = ''; let total = 0;
+            const cont = document.getElementById('cart-items-wrapper'); cont.innerHTML = ''; let total = 0; let totalItemsCount = 0;
             carrito.forEach((item, index) => { 
                 total += (item.precio * item.cantidad); 
+                totalItemsCount += item.cantidad;
                 cont.innerHTML += `
                 <div class="cart-line-item">
                     <div class="cart-line-top"><span>${item.nombre}</span><span>Bs. ${item.precio*item.cantidad}</span></div>
@@ -823,14 +834,19 @@
                     </div>
                 </div>`; 
             });
-            document.getElementById('txt-subtotal').innerText = `Bs. ${total}`; document.getElementById('txt-total').innerText = `Bs. ${total}`; 
+            document.getElementById('txt-subtotal').innerText = `Bs. ${total}`; 
+            document.getElementById('txt-total').innerText = `Bs. ${total}`; 
             document.getElementById('pedido-correlativo-tag').innerText = `Pedido #${correlativoPedido}`;
+            
+            // Actualizar botón flotante móvil
+            document.getElementById('mobile-cart-count').innerText = totalItemsCount;
+            document.getElementById('mobile-cart-total').innerText = `Bs. ${total}`;
         }
         function ajustarCarrito(index, delta) { carrito[index].cantidad += delta; if(carrito[index].cantidad <= 0) carrito.splice(index, 1); renderCarrito(); }
-        function vaciarCarrito() { carrito = []; renderCarrito(); }
+        function vaciarCarrito() { carrito = []; renderCarrito(); toggleMobileCart(false); }
         
         function abrirModalCobro() { 
-            if(carrito.length === 0) return alert("El carrito est谩 vac铆o");
+            if(carrito.length === 0) return alert("El carrito está vacío");
             document.getElementById('modal-cobro-monto').innerText = document.getElementById('txt-total').innerText; 
             document.getElementById('cobro-recibido').value = ""; document.getElementById('cobro-cambio').innerText = "Bs. 0.00";
             seleccionarMetodoCobro('EFECTIVO', document.querySelector('.pay-choice.active') || document.querySelectorAll('.pay-choice')[0]);
@@ -841,8 +857,8 @@
             metodoPagoSeleccionado = m; 
             document.querySelectorAll('.pay-choice').forEach(b => { b.classList.remove('btn-primary', 'active'); b.classList.add('btn-outline'); });
             btn.classList.remove('btn-outline'); btn.classList.add('btn-primary', 'active');
-            if(m === 'CR脡DITO' && document.getElementById('cart-cliente-select').value === 'CONSUMIDOR_FINAL') {
-                alert("Selecciona un cliente registrado para dar cr茅dito."); seleccionarMetodoCobro('EFECTIVO', document.querySelectorAll('.pay-choice')[0]);
+            if(m === 'CRÉDITO' && document.getElementById('cart-cliente-select').value === 'CONSUMIDOR_FINAL') {
+                alert("Selecciona un cliente registrado para dar crédito."); seleccionarMetodoCobro('EFECTIVO', document.querySelectorAll('.pay-choice')[0]);
             }
         }
 
@@ -854,7 +870,7 @@
         function finalizarVentaEImprimir() {
             const t = carrito.reduce((a,b)=>a+(b.precio*b.cantidad),0); const cliId = document.getElementById('cart-cliente-select').value;
             const clienteObj = clientesData.find(c => c.id === cliId) || clientesData[0];
-            if(metodoPagoSeleccionado === 'CR脡DITO') { clienteObj.saldo += t; clienteObj.totalCompras += t; } 
+            if(metodoPagoSeleccionado === 'CRÉDITO') { clienteObj.saldo += t; clienteObj.totalCompras += t; } 
             else if(cliId !== 'CONSUMIDOR_FINAL') { clienteObj.totalCompras += t; clienteObj.totalPagado += t; }
 
             const nuevoPedido = { 
@@ -872,6 +888,7 @@
             document.getElementById('prt-total-val').innerText = `Bs. ${t}`;
 
             cerrarModal('modal-cobro'); vaciarCarrito(); document.getElementById('cart-observaciones').value = '';
+            toggleMobileCart(false);
             ejecutarReportes(); renderDirectorioGeneral(); renderCuentasPorCobrar();
             window.print();
         }
@@ -897,9 +914,9 @@
                 <tr>
                     <td>${cli.nombre}</td><td>${cli.telefono}</td><td>Bs. ${cli.totalCompras}</td><td>Bs. ${cli.totalPagado}</td><td>Bs. ${cli.saldo}</td>
                     <td>
-                        <button class="btn-main btn-outline btn-small" title="Imprimir Compras Ticket" onclick="imprimirExportarClienteIndividual('${cli.id}', 'ticket', false)">馃枿锔� Ticket</button>
-                        <button class="btn-main btn-outline btn-small" title="Exportar Compras PDF" onclick="imprimirExportarClienteIndividual('${cli.id}', 'pdf', false)">馃摃 PDF</button>
-                        <button class="btn-main btn-outline btn-small" title="Exportar Compras Excel" onclick="imprimirExportarClienteIndividual('${cli.id}', 'excel', false)">馃搳 Excel</button>
+                        <button class="btn-main btn-outline btn-small" title="Imprimir Compras Ticket" onclick="imprimirExportarClienteIndividual('${cli.id}', 'ticket', false)">🖨️ Ticket</button>
+                        <button class="btn-main btn-outline btn-small" title="Exportar Compras PDF" onclick="imprimirExportarClienteIndividual('${cli.id}', 'pdf', false)">📕 PDF</button>
+                        <button class="btn-main btn-outline btn-small" title="Exportar Compras Excel" onclick="imprimirExportarClienteIndividual('${cli.id}', 'excel', false)">📊 Excel</button>
                         <button class="btn-main btn-danger btn-small" onclick="eliminarCliente('${cli.id}')">X</button>
                     </td>
                 </tr>`;
@@ -913,9 +930,9 @@
                     <td>${cli.nombre}</td><td>${cli.telefono}</td><td>Bs. ${cli.totalCompras}</td><td>Bs. ${cli.totalPagado}</td><td style="color:var(--danger); font-weight:bold;">Bs. ${cli.saldo}</td>
                     <td>
                         <button class="btn-main btn-success btn-small" onclick="abonarDeuda('${cli.id}')">Abonar</button>
-                        <button class="btn-main btn-outline btn-small" title="Imprimir Deudas Ticket" onclick="imprimirExportarClienteIndividual('${cli.id}', 'ticket', true)">馃枿锔� Ticket</button>
-                        <button class="btn-main btn-outline btn-small" title="Exportar Deudas PDF" onclick="imprimirExportarClienteIndividual('${cli.id}', 'pdf', true)">馃摃 PDF</button>
-                        <button class="btn-main btn-outline btn-small" title="Exportar Deudas Excel" onclick="imprimirExportarClienteIndividual('${cli.id}', 'excel', true)">馃搳 Excel</button>
+                        <button class="btn-main btn-outline btn-small" title="Imprimir Deudas Ticket" onclick="imprimirExportarClienteIndividual('${cli.id}', 'ticket', true)">🖨️ Ticket</button>
+                        <button class="btn-main btn-outline btn-small" title="Exportar Deudas PDF" onclick="imprimirExportarClienteIndividual('${cli.id}', 'pdf', true)">📕 PDF</button>
+                        <button class="btn-main btn-outline btn-small" title="Exportar Deudas Excel" onclick="imprimirExportarClienteIndividual('${cli.id}', 'excel', true)">📊 Excel</button>
                     </td>
                 </tr>`;
             });
@@ -936,7 +953,7 @@
                 document.body.appendChild(tempTable);
             }
             
-            let thead = `<tr><th>Fecha</th><th>N潞 Pedido</th><th>Tipo</th><th>M茅todo de Pago</th><th>Total Bs.</th></tr>`;
+            let thead = `<tr><th>Fecha</th><th>Nº Pedido</th><th>Tipo</th><th>Método de Pago</th><th>Total Bs.</th></tr>`;
             let tbody = '';
             
             pedidosCliente.forEach(p => {
@@ -949,7 +966,7 @@
             }
 
             tbody += `
-                <tr><td colspan="4" style="text-align:right; font-weight:bold;">TOTAL HIST脫RICO COMPRADO:</td><td style="font-weight:bold;">Bs. ${cli.totalCompras}</td></tr>
+                <tr><td colspan="4" style="text-align:right; font-weight:bold;">TOTAL HISTÓRICO COMPRADO:</td><td style="font-weight:bold;">Bs. ${cli.totalCompras}</td></tr>
                 <tr><td colspan="4" style="text-align:right; font-weight:bold;">TOTAL PAGADO/ABONADO:</td><td style="font-weight:bold;">Bs. ${cli.totalPagado}</td></tr>
                 <tr><td colspan="4" style="text-align:right; font-weight:bold;">SALDO DEUDOR PENDIENTE:</td><td style="font-weight:bold; color:var(--danger);">Bs. ${cli.saldo}</td></tr>
             `;
@@ -967,11 +984,11 @@
             clientesData.push({ id: generarUUID(), nombre: n, telefono: document.getElementById('cli-telefono').value, direccion: document.getElementById('cli-direccion').value, totalCompras: 0, totalPagado: 0, saldo: 0 });
             guardarEstadoEnStorage(); cerrarModal('modal-cliente-form'); renderClientesSelects(); renderDirectorioGeneral();
         }
-        function eliminarCliente(id) { if(confirm("驴Eliminar cliente?")) { clientesData = clientesData.filter(c=>c.id !== id); guardarEstadoEnStorage(); renderDirectorioGeneral(); renderCuentasPorCobrar(); renderClientesSelects(); } }
+        function eliminarCliente(id) { if(confirm("¿Eliminar cliente?")) { clientesData = clientesData.filter(c=>c.id !== id); guardarEstadoEnStorage(); renderDirectorioGeneral(); renderCuentasPorCobrar(); renderClientesSelects(); } }
         function abonarDeuda(id) {
             const cli = clientesData.find(c => c.id === id); const abono = parseFloat(prompt(`Saldo actual de ${cli.nombre}: Bs. ${cli.saldo}\nIngrese monto a abonar (Bs):`));
-            if(abono > 0 && abono <= cli.saldo) { cli.saldo -= abono; cli.totalPagado += abono; guardarEstadoEnStorage(); renderDirectorioGeneral(); renderCuentasPorCobrar(); alert("Abono registrado con 茅xito."); } 
-            else if(abono) { alert("Monto inv谩lido."); }
+            if(abono > 0 && abono <= cli.saldo) { cli.saldo -= abono; cli.totalPagado += abono; guardarEstadoEnStorage(); renderDirectorioGeneral(); renderCuentasPorCobrar(); alert("Abono registrado con éxito."); } 
+            else if(abono) { alert("Monto inválido."); }
         }
 
         /* ================= 6. REPORTES Y KPIs ================= */
@@ -995,7 +1012,7 @@
             let tVentas = 0, tEfectivo = 0, tDigital = 0, tCredito = 0, tCosto = 0;
             repFiltrados.forEach(p => {
                 tVentas += p.total;
-                if(p.metodoPago === 'EFECTIVO') tEfectivo += p.total; else if(p.metodoPago === 'CR脡DITO') tCredito += p.total; else tDigital += p.total; 
+                if(p.metodoPago === 'EFECTIVO') tEfectivo += p.total; else if(p.metodoPago === 'CRÉDITO') tCredito += p.total; else tDigital += p.total; 
                 p.items.forEach(item => { tCosto += (item.costo * item.cantidad); });
             });
 
@@ -1004,8 +1021,8 @@
             document.getElementById('kpi-ganancia').innerText = `Bs. ${(tVentas - tCosto).toFixed(2)}`;
 
             let tabData = repFiltrados;
-            if(repSubTab === 'contado') tabData = repFiltrados.filter(p => p.metodoPago !== 'CR脡DITO');
-            if(repSubTab === 'credito') tabData = repFiltrados.filter(p => p.metodoPago === 'CR脡DITO');
+            if(repSubTab === 'contado') tabData = repFiltrados.filter(p => p.metodoPago !== 'CRÉDITO');
+            if(repSubTab === 'credito') tabData = repFiltrados.filter(p => p.metodoPago === 'CRÉDITO');
 
             const table = document.getElementById('tabla-reporte-dinamica');
             let thead = `<tr><th>Pedido</th><th>Fecha</th><th>Cliente</th><th>Tipo</th><th>Pago</th><th>Total</th></tr>`;
@@ -1076,9 +1093,9 @@
             else { usuariosData.push({id: generarUUID(), user: u, pass: p, rol: r}); }
             guardarEstadoEnStorage(); cerrarModal('modal-usuario-form'); renderUsuarios();
         }
-        function eliminarUsuario(id) { if(usuariosData.length <= 1) return alert("Debe quedar al menos 1 usuario."); if(confirm("驴Eliminar usuario?")) { usuariosData = usuariosData.filter(u => u.id !== id); guardarEstadoEnStorage(); renderUsuarios(); } }
+        function eliminarUsuario(id) { if(usuariosData.length <= 1) return alert("Debe quedar al menos 1 usuario."); if(confirm("¿Eliminar usuario?")) { usuariosData = usuariosData.filter(u => u.id !== id); guardarEstadoEnStorage(); renderUsuarios(); } }
 
-        /* ================= 9. IMPRESI脫N Y EXPORTACI脫N ================= */
+        /* ================= 9. IMPRESIÓN Y EXPORTACIÓN ================= */
         function imprimirExportarClientes(formato) {
             const tableId = (tabClienteActiva === 'lista') ? 'tabla-clientes' : 'tabla-cuentas';
             const titulo = (tabClienteActiva === 'lista') ? 'Directorio de Clientes' : 'Reporte de Cuentas por Cobrar';
@@ -1087,10 +1104,10 @@
 
         function exportarImprimirGenerico(tableId, formato, tituloArchivo) {
             if (formato === 'excel') {
-                if(typeof XLSX === 'undefined') return alert("Librer铆a Excel cargando, intente en un segundo.");
+                if(typeof XLSX === 'undefined') return alert("Librería Excel cargando, intente en un segundo.");
                 let table = document.getElementById(tableId); let wb = XLSX.utils.table_to_book(table, {sheet: "Datos"}); XLSX.writeFile(wb, `${tituloArchivo.replace(/ /g, '_')}_${new Date().getTime()}.xlsx`);
             } else if (formato === 'pdf') {
-                if(typeof window.jspdf === 'undefined') return alert("Librer铆a PDF cargando, intente en un segundo.");
+                if(typeof window.jspdf === 'undefined') return alert("Librería PDF cargando, intente en un segundo.");
                 const { jsPDF } = window.jspdf; const doc = new jsPDF();
                 doc.setFontSize(16); doc.text(configEmpresa.nombre || 'RESTAURANTE POS', 14, 15);
                 doc.setFontSize(12); doc.text(tituloArchivo, 14, 22);
@@ -1110,4 +1127,3 @@
     </script>
 </body>
 </html>
-
